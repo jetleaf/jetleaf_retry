@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the DefaultRetryExecutor.new constructor from Class DefaultRetryExecutor from the jetleaf_retry library, for the Dart programming language.">
+  <title>DefaultRetryExecutor.new constructor - DefaultRetryExecutor - jetleaf_retry library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry.dart</a></li>
+    <li><a href="../../jetleaf_retry/DefaultRetryExecutor-class.html">DefaultRetryExecutor</a></li>
+    <li class="self-crumb">DefaultRetryExecutor.new constructor</li>
+  </ol>
+  <div class="self-name">DefaultRetryExecutor.new</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="jetleaf_retry&#47;DefaultRetryExecutor-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-constructor">DefaultRetryExecutor</span> constructor 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+      <span class="name ">DefaultRetryExecutor</span>(<wbr>)
+    </section>
+    
+<section class="desc markdown">
+  <p>Default constructor for the executor.</p>
+<p>Initializes the <a href="../../jetleaf_retry/DefaultRetryExecutor-class.html">DefaultRetryExecutor</a> instance without pre-configured
+policies or statistics. These should be set via the relevant setters
+before executing retryable operations.</p>
+<p>The default implementation of <a href="../../jetleaf_retry/RetryExecutor-class.html">RetryExecutor</a>, responsible for orchestrating
+the execution of retryable operations with configured policies, backoff,
+listeners, and statistics.</p>
+<p>This class provides a concrete executor that integrates:</p>
+<ul>
+<li><a href="../../jetleaf_retry/RetryPolicy-class.html">RetryPolicy</a> for deciding if retries are allowed.</li>
+<li><a href="../../jetleaf_retry/BackoffPolicy-class.html">BackoffPolicy</a> for computing delays between retries.</li>
+<li><a href="../../jetleaf_retry/RetryListener-class.html">RetryListener</a> notifications during the retry lifecycle.</li>
+<li><a href="../../jetleaf_retry/RetryStatistics-class.html">RetryStatistics</a> for collecting metrics and monitoring retry behavior.</li>
+</ul>
+<p>Typically used in combination with <code>ExecutableResilienceFactory</code> or
+<a href="../../jetleaf_retry/AnnotationAwareRetryFactory-class.html">AnnotationAwareRetryFactory</a> to automatically handle retry logic for
+annotated methods.</p>
+<p>Example usage:</p>
+<pre class="language-dart"><code class="language-dart">final executor = DefaultRetryExecutor()
+  .withRetryPolicy(retryPolicy)
+  .withBackoffPolicy(backoffPolicy)
+  .withListeners([loggingListener])
+  .withStatistics(statistics);
+
+final result = await executor.execute(callback, recoveryCallback);
+</code></pre>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">DefaultRetryExecutor();</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/DefaultRetryExecutor-class.html">DefaultRetryExecutor</a></li>
+    <li class="self-crumb">DefaultRetryExecutor.new constructor</li>
+</ol>
+
+    <h5>DefaultRetryExecutor class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    jetleaf_retry
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

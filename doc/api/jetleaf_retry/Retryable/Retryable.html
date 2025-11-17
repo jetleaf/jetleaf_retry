@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the Retryable.new constructor from Class Retryable from the jetleaf_retry library, for the Dart programming language.">
+  <title>Retryable.new constructor - Retryable - jetleaf_retry library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry.dart</a></li>
+    <li><a href="../../jetleaf_retry/Retryable-class.html">Retryable</a></li>
+    <li class="self-crumb">Retryable.new const constructor</li>
+  </ol>
+  <div class="self-name">Retryable.new</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="jetleaf_retry&#47;Retryable-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-constructor">Retryable</span> constructor 
+</h1></div>
+
+    <section class="multi-line-signature">
+      const
+      <span class="name ">Retryable</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-maxAttempts"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">maxAttempts</span> = <span class="default-value">3</span>, </span></li>
+<li><span class="parameter" id="-param-backoff"><span class="type-annotation"><a href="../../jetleaf_retry/Backoff-class.html">Backoff</a></span> <span class="parameter-name">backoff</span> = <span class="default-value">const Backoff()</span>, </span></li>
+<li><span class="parameter" id="-param-retryFor"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Object-class.html">Object</a></span>&gt;</span></span> <span class="parameter-name">retryFor</span> = <span class="default-value">const []</span>, </span></li>
+<li><span class="parameter" id="-param-noRetryFor"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Object-class.html">Object</a></span>&gt;</span></span> <span class="parameter-name">noRetryFor</span> = <span class="default-value">const []</span>, </span></li>
+<li><span class="parameter" id="-param-label"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">label</span>, </span></li>
+<li><span class="parameter" id="-param-listeners"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Object-class.html">Object</a></span>&gt;</span></span> <span class="parameter-name">listeners</span> = <span class="default-value">const []</span>, </span></li>
+</ol>})
+    </section>
+    
+<section class="desc markdown">
+  <p>Annotation that marks a method as <em>retryable</em>, indicating that the JetLeaf
+runtime should automatically retry its invocation when certain exceptions
+occur.</p>
+<p>The <a href="../../jetleaf_retry/Retryable-class.html">Retryable</a> annotation allows developers to declaratively configure
+retry logic for transient failures, network instability, or service
+unavailability. When applied, JetLeaf intercepts method invocations and
+transparently re-executes the operation according to the provided retry
+policy.</p>
+<h3 id="example">Example</h3>
+<pre class="language-dart"><code class="language-dart">@Retryable(
+  maxAttempts: 5,
+  backoff: Backoff(delay: Duration(milliseconds: 200), multiplier: 2.0),
+  retryFor: [TimeoutException, NetworkException],
+  noRetryFor: [ValidationException],
+  label: 'user-sync',
+)
+Future&lt;void&gt; synchronizeUserData() async {
+  // May be retried automatically if transient network failures occur.
+}
+</code></pre>
+<h3 id="retry-policy-components">Retry Policy Components</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>maxAttempts</code></td>
+<td>Maximum number of total attempts (including the initial call).</td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>backoff</code></td>
+<td>Strategy controlling retry delays and growth behavior.</td>
+<td><code>Backoff()</code> (no delay)</td>
+</tr>
+<tr>
+<td><code>retryFor</code></td>
+<td>List of exception types that should trigger a retry.</td>
+<td><code>[]</code> (retry all)</td>
+</tr>
+<tr>
+<td><code>noRetryFor</code></td>
+<td>List of exception types explicitly excluded from retrying.</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>Optional identifier for this retry configuration, used in logging or metrics.</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>listeners</code></td>
+<td>List of listener classes that handle retry lifecycle events (e.g. before retry, after failure).</td>
+<td><code>[]</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="exception-type-resolution">Exception Type Resolution</h3>
+<p>Elements in <a href="../../jetleaf_retry/Retryable/retryFor.html">retryFor</a> and <a href="../../jetleaf_retry/Retryable/noRetryFor.html">noRetryFor</a> can be represented as:</p>
+<ul>
+<li>A <strong>Dart Type</strong> (e.g. <code>HttpException</code>)</li>
+<li>A <strong><code>ClassType&lt;T&gt;</code></strong> reference for runtime lookup</li>
+<li>A <strong>fully-qualified string</strong> (e.g. <code>"package:example/example.dart.Exception"</code>)</li>
+</ul>
+<h3 id="listener-integration">Listener Integration</h3>
+<p>Retry listeners (provided in <a href="../../jetleaf_retry/Retryable/listeners.html">listeners</a>) can observe or modify retry
+behavior dynamically. Each listener may respond to lifecycle callbacks such
+as:</p>
+<ul>
+<li><code>onRetry()</code> — called before a retry attempt</li>
+<li><code>onError()</code> — called when an exception occurs</li>
+<li><code>onExhausted()</code> — called when all retry attempts fail</li>
+</ul>
+<h3 id="target">Target</h3>
+<p>This annotation may only be applied to methods:</p>
+<pre class="language-dart"><code class="language-dart">@Target({TargetKind.method})
+</code></pre>
+<h3 id="see-also">See Also</h3>
+<ul>
+<li><a href="../../jetleaf_retry/Backoff-class.html">Backoff</a> for defining retry delay strategies.</li>
+<li><a href="../../jetleaf_retry/RetryListener-class.html">RetryListener</a> (if available) for event-driven retry extensions.</li>
+<li><code>ReflectableAnnotation</code> for reflection-based runtime processing.</li>
+</ul>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">const Retryable({
+  this.maxAttempts = 3,
+  this.backoff = const Backoff(),
+  this.retryFor = const [],
+  this.noRetryFor = const [],
+  this.label,
+  this.listeners = const [],
+});</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/Retryable-class.html">Retryable</a></li>
+    <li class="self-crumb">Retryable.new const constructor</li>
+</ol>
+
+    <h5>Retryable class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    jetleaf_retry
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

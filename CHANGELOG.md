@@ -1,0 +1,21 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.0.0] - 2025-11-17
+
+Initial release.
+
+### Added
+
+- Resilience primitives including retry, backoff policies, recovery callbacks and listeners.
+- AOP integration to apply retry policies declaratively via annotations.
+
+### Links
+
+- Homepage: https://jetleaf.hapnium.com
+- Documentation: https://jetleaf.hapnium.com/docs/resilience
+- Repository: https://github.com/jetleaf/jetleaf_retry
+- Issues: https://github.com/jetleaf/jetleaf_retry/issues
+
+Contributors: Hapnium & JetLeaf contributors

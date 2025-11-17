@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the RetryDefinition.new constructor from Class RetryDefinition from the jetleaf_retry library, for the Dart programming language.">
+  <title>RetryDefinition.new constructor - RetryDefinition - jetleaf_retry library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry.dart</a></li>
+    <li><a href="../../jetleaf_retry/RetryDefinition-class.html">RetryDefinition</a></li>
+    <li class="self-crumb">RetryDefinition.new const constructor</li>
+  </ol>
+  <div class="self-name">RetryDefinition.new</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="jetleaf_retry&#47;RetryDefinition-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-constructor">RetryDefinition</span> constructor 
+</h1></div>
+
+    <section class="multi-line-signature">
+      const
+      <span class="name ">RetryDefinition</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="-param-method"><span class="type-annotation">Method</span> <span class="parameter-name">method</span>, </span></li>
+<li><span class="parameter" id="-param-retryable"><span class="type-annotation"><a href="../../jetleaf_retry/Retryable-class.html">Retryable</a></span> <span class="parameter-name">retryable</span>, </span></li>
+<li><span class="parameter" id="-param-listeners"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../jetleaf_retry/RetryListener-class.html">RetryListener</a></span>&gt;</span></span> <span class="parameter-name">listeners</span></span></li>
+</ol>)
+    </section>
+    
+<section class="desc markdown">
+  <p>Immutable metadata descriptor encapsulating retry and recovery
+configuration for a specific method.</p>
+<p>A <strong>RetryDefinition</strong> combines:</p>
+<ul>
+<li>The <a href="../../jetleaf_retry/RetryDefinition/method.html">method</a> to which the retry rules apply.</li>
+<li>The <a href="../../jetleaf_retry/Retryable-class.html">Retryable</a> annotation defining retry policy and backoff.</li>
+<li>An optional <a href="../../jetleaf_retry/Recover-class.html">Recover</a> annotation specifying the fallback handler.</li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>This class acts as a lightweight, pre-processed metadata holder used
+by the retry execution engine to apply consistent, precomputed
+retry logic at runtime.</p>
+<h2 id="example">Example</h2>
+<pre class="language-dart"><code class="language-dart">@Retryable(maxAttempts: 3)
+Future&lt;void&gt; performOperation() async {
+  // retryable operation
+}
+
+@Recover()
+void onFailure(Exception e) {
+  print('Operation failed after all retries: $e');
+}
+
+// In runtime:
+final def = RetryDefinition(method, retryableAnnotation, listeners);
+print(def.retryable.maxAttempts); // 3
+</code></pre>
+<h2 id="fields">Fields</h2>
+<ul>
+<li><a href="../../jetleaf_retry/RetryDefinition/method.html">method</a>: The reflective representation of the annotated method.</li>
+<li><a href="../../jetleaf_retry/RetryDefinition/retryable.html">retryable</a>: The retry configuration metadata.</li>
+<li><a href="../../jetleaf_retry/RetryDefinition/listeners.html">listeners</a>: Loaded listeners, if given.</li>
+</ul>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">const RetryDefinition(this.method, this.retryable, this.listeners);</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/RetryDefinition-class.html">RetryDefinition</a></li>
+    <li class="self-crumb">RetryDefinition.new const constructor</li>
+</ol>
+
+    <h5>RetryDefinition class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    jetleaf_retry
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the findRecoveryMethod method from the AbstractRetryFactory class, for the Dart programming language.">
+  <title>findRecoveryMethod method - AbstractRetryFactory class - jetleaf_retry library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry.dart</a></li>
+    <li><a href="../../jetleaf_retry/AbstractRetryFactory-class.html">AbstractRetryFactory</a></li>
+    <li class="self-crumb">findRecoveryMethod method</li>
+  </ol>
+  <div class="self-name">findRecoveryMethod</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="jetleaf_retry&#47;AbstractRetryFactory-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">findRecoveryMethod</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.dart.dev/stable/3.9.2/dart-core/MapEntry-class.html">MapEntry</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../jetleaf_retry/Recover-class.html">Recover</a></span>, <span class="type-parameter">Method</span>&gt;</span>?</span>
+<span class="name ">findRecoveryMethod</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="findRecoveryMethod-param-target"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">target</span>, </span></li>
+<li><span class="parameter" id="findRecoveryMethod-param-method"><span class="type-annotation">Method</span> <span class="parameter-name">method</span>, </span></li>
+<li><span class="parameter" id="findRecoveryMethod-param-label"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">label</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Searches for a suitable recovery method annotated with <a href="../../jetleaf_retry/Recover-class.html">Recover</a>
+within the given <code>target</code> object for a specific <code>method</code>.</p>
+<p>The recovery method serves as a fallback mechanism that executes
+when all retry attempts fail, allowing controlled recovery or graceful
+degradation of functionality.</p>
+<h3 id="matching-rules">Matching Rules</h3>
+<p>A method qualifies as a recovery method if it satisfies all of:</p>
+<ol>
+<li>Annotated with <a href="../../jetleaf_retry/Recover-class.html">Recover</a>.</li>
+<li>Label matches the one in the <a href="../../jetleaf_retry/Retryable-class.html">Retryable</a> definition:
+<ul>
+<li>If a <code>label</code> is provided, only recover methods with the same label match.</li>
+<li>If no <code>label</code> is provided, recover methods with labels are ignored.</li>
+</ul>
+</li>
+<li>Return type is assignable to the original method's return type.</li>
+<li>First parameter must be an <a href="https://api.dart.dev/stable/3.9.2/dart-core/Exception-class.html">Exception</a> (or subclass).</li>
+<li>Additional parameters should correspond to the original method’s parameters.</li>
+</ol>
+<h3 id="parameters">Parameters</h3>
+<ul>
+<li><code>target</code>: The instance whose class should be scanned for recovery methods.</li>
+<li><code>method</code>: The original method for which a recovery candidate is sought.</li>
+<li><code>label</code>: An optional label to match specific recovery methods.</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<ul>
+<li>A <a href="https://api.dart.dev/stable/3.9.2/dart-core/MapEntry-class.html">MapEntry</a> pairing the <a href="../../jetleaf_retry/Recover-class.html">Recover</a> annotation and its corresponding <code>Method</code>,
+if a valid recovery method is found.</li>
+<li><code>null</code> if no suitable recovery method exists.</li>
+</ul>
+<h3 id="logging">Logging</h3>
+<ul>
+<li>Debug logs are emitted when a recovery method is found.</li>
+<li>No logs for unmatched methods to reduce noise.</li>
+</ul>
+<h3 id="example">Example</h3>
+<pre class="language-dart"><code class="language-dart">final entry = findRecoveryMethod(service, failingMethod, 'network');
+if (entry != null) {
+  print('Recovery handler: ${entry.value.getName()}');
+}
+</code></pre>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">MapEntry&lt;Recover, Method&gt;? findRecoveryMethod(Object target, Method method, String? label) {
+  final logger = getLog();
+  final targetClass = target.getClass();
+  final methods = targetClass.getMethods();
+
+  for (final m in methods) {
+    final recover = m.getDirectAnnotation&lt;Recover&gt;();
+    if (recover == null) continue;
+
+    &#47;&#47; Label filtering
+    if (label != null &amp;&amp; recover.label != label) continue;
+    if (label == null &amp;&amp; recover.label != null) continue;
+
+    &#47;&#47; Return type compatibility
+    if (!m.getReturnClass().isAssignableTo(method.getReturnClass())) continue;
+
+    &#47;&#47; Parameter validation
+    final params = m.getParameters();
+    if (params.isEmpty) continue;
+
+    final firstParam = params.first.getClass();
+    if (!ClassUtils.isAssignableToError(firstParam)) continue;
+
+    if (logger.getIsTraceEnabled()) {
+      logger.trace(&#39;Found recovery method: ${m.getName()} for ${method.getName()}&#39;);
+    }
+
+    return MapEntry(recover, m);
+  }
+
+  return null;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/AbstractRetryFactory-class.html">AbstractRetryFactory</a></li>
+    <li class="self-crumb">findRecoveryMethod method</li>
+</ol>
+
+    <h5>AbstractRetryFactory class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    jetleaf_retry
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the buildDefinition method from the AbstractRetryFactory class, for the Dart programming language.">
+  <title>buildDefinition method - AbstractRetryFactory class - jetleaf_retry library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry.dart</a></li>
+    <li><a href="../../jetleaf_retry/AbstractRetryFactory-class.html">AbstractRetryFactory</a></li>
+    <li class="self-crumb">buildDefinition method</li>
+  </ol>
+  <div class="self-name">buildDefinition</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="jetleaf_retry&#47;AbstractRetryFactory-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">buildDefinition</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="../../jetleaf_retry/RetryDefinition-class.html">RetryDefinition</a>?</span>
+<span class="name ">buildDefinition</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="buildDefinition-param-method"><span class="type-annotation">Method</span> <span class="parameter-name">method</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <hr>
+<h2 id="retry-definition-builder--recovery-resolver">Retry Definition Builder &amp; Recovery Resolver</h2>
+<p>Builds a <a href="../../jetleaf_retry/RetryDefinition-class.html">RetryDefinition</a> for the given <code>method</code> by analyzing its
+annotations and constructing any configured retry listeners.</p>
+<p>This function inspects the method for the presence of the <a href="../../jetleaf_retry/Retryable-class.html">Retryable</a>
+annotation. If no such annotation is found, it returns <code>null</code>, indicating
+that the method is <strong>not retryable</strong>.</p>
+<p>If the annotation is present:</p>
+<ul>
+<li>It loads and instantiates all configured <a href="../../jetleaf_retry/RetryListener-class.html">RetryListener</a> classes.</li>
+<li>Handles both direct listener instances and listener class names.</li>
+<li>Performs robust error handling and logging for failed instantiations.</li>
+<li>Constructs and returns a <a href="../../jetleaf_retry/RetryDefinition-class.html">RetryDefinition</a> binding together:
+<ul>
+<li>The reflective <code>Method</code> reference</li>
+<li>The <a href="../../jetleaf_retry/Retryable-class.html">Retryable</a> annotation metadata</li>
+<li>The list of listener instances</li>
+</ul>
+</li>
+</ul>
+<h3 id="parameters">Parameters</h3>
+<ul>
+<li><code>method</code>: The reflective method being analyzed.</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<ul>
+<li>A fully constructed <a href="../../jetleaf_retry/RetryDefinition-class.html">RetryDefinition</a> if the method is retryable.</li>
+<li><code>null</code> if no <a href="../../jetleaf_retry/Retryable-class.html">Retryable</a> annotation is present.</li>
+</ul>
+<h3 id="logging">Logging</h3>
+<ul>
+<li>Debug logs are emitted for non-<a href="../../jetleaf_retry/RetryListener-class.html">RetryListener</a> types or ignored listeners.</li>
+<li>Warnings are logged for listener instantiation failures.</li>
+</ul>
+<h3 id="example">Example</h3>
+<pre class="language-dart"><code class="language-dart">final method = MyService.getClass().getMethod('doWork');
+final definition = buildDefinition(method);
+
+if (definition != null) {
+  print('Retryable method: ${definition.method.getName()}');
+}
+</code></pre>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">&#47;&#47;&#47; {@template build_definition}
+&#47;&#47;&#47; Builds a [RetryDefinition] for the given [method] by analyzing its
+&#47;&#47;&#47; annotations and constructing any configured retry listeners.
+&#47;&#47;&#47;
+&#47;&#47;&#47; This function inspects the method for the presence of the [Retryable]
+&#47;&#47;&#47; annotation. If no such annotation is found, it returns `null`, indicating
+&#47;&#47;&#47; that the method is **not retryable**.
+&#47;&#47;&#47;
+&#47;&#47;&#47; If the annotation is present:
+&#47;&#47;&#47; - It loads and instantiates all configured [RetryListener] classes.
+&#47;&#47;&#47; - Handles both direct listener instances and listener class names.
+&#47;&#47;&#47; - Performs robust error handling and logging for failed instantiations.
+&#47;&#47;&#47; - Constructs and returns a [RetryDefinition] binding together:
+&#47;&#47;&#47;   - The reflective [Method] reference
+&#47;&#47;&#47;   - The [Retryable] annotation metadata
+&#47;&#47;&#47;   - The list of listener instances
+&#47;&#47;&#47;
+&#47;&#47;&#47; ### Parameters
+&#47;&#47;&#47; - [method]: The reflective method being analyzed.
+&#47;&#47;&#47;
+&#47;&#47;&#47; ### Returns
+&#47;&#47;&#47; - A fully constructed [RetryDefinition] if the method is retryable.
+&#47;&#47;&#47; - `null` if no [Retryable] annotation is present.
+&#47;&#47;&#47;
+&#47;&#47;&#47; ### Logging
+&#47;&#47;&#47; - Debug logs are emitted for non-[RetryListener] types or ignored listeners.
+&#47;&#47;&#47; - Warnings are logged for listener instantiation failures.
+&#47;&#47;&#47;
+&#47;&#47;&#47; ### Example
+&#47;&#47;&#47; ```dart
+&#47;&#47;&#47; final method = MyService.getClass().getMethod(&#39;doWork&#39;);
+&#47;&#47;&#47; final definition = buildDefinition(method);
+&#47;&#47;&#47;
+&#47;&#47;&#47; if (definition != null) {
+&#47;&#47;&#47;   print(&#39;Retryable method: ${definition.method.getName()}&#39;);
+&#47;&#47;&#47; }
+&#47;&#47;&#47; ```
+&#47;&#47;&#47; {@endtemplate}
+RetryDefinition? buildDefinition(Method method) {
+  final logger = getLog();
+  final retryable = method.getDirectAnnotation&lt;Retryable&gt;();
+
+  &#47;&#47; Skip non-retryable methods
+  if (retryable == null) {
+    return null;
+  }
+
+  &#47;&#47; Collect retry listeners, instantiating if necessary
+  final listeners = &lt;RetryListener&gt;[];
+  for (final listener in retryable.listeners) {
+    if (listener is RetryListener) {
+      listeners.add(listener);
+    } else {
+      final type = ClassUtils.loadClass(listener);
+
+      if (type != null) {
+        try {
+          final listenerInstance = type.newInstance();
+
+          if (listenerInstance is RetryListener) {
+            listeners.add(listenerInstance);
+          } else {
+            if (logger.getIsDebugEnabled()) {
+              logger.debug(&#39;Ignoring $listenerInstance since it is not a type of [RetryListener]&#39;);
+            }
+          }
+        } catch (e, st) {
+          if (logger.getIsWarnEnabled()) {
+            logger.warn(&#39;Failed to instantiate retry listener: $listener&#39;, error: e, stacktrace: st);
+          }
+        }
+      }
+    }
+  }
+
+  return RetryDefinition(method, retryable, listeners);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/AbstractRetryFactory-class.html">AbstractRetryFactory</a></li>
+    <li class="self-crumb">buildDefinition method</li>
+</ol>
+
+    <h5>AbstractRetryFactory class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    jetleaf_retry
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

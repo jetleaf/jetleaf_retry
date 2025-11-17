@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the SimpleRetryPolicy.new constructor from Class SimpleRetryPolicy from the jetleaf_retry library, for the Dart programming language.">
+  <title>SimpleRetryPolicy.new constructor - SimpleRetryPolicy - jetleaf_retry library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry.dart</a></li>
+    <li><a href="../../jetleaf_retry/SimpleRetryPolicy-class.html">SimpleRetryPolicy</a></li>
+    <li class="self-crumb">SimpleRetryPolicy.new constructor</li>
+  </ol>
+  <div class="self-name">SimpleRetryPolicy.new</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="jetleaf_retry&#47;SimpleRetryPolicy-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-constructor">SimpleRetryPolicy</span> constructor 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+      <span class="name ">SimpleRetryPolicy</span>(<wbr>)
+    </section>
+    
+<section class="desc markdown">
+  <p>Creates a new <a href="../../jetleaf_retry/SimpleRetryPolicy-class.html">SimpleRetryPolicy</a> with the specified parameters.</p>
+<p>A straightforward implementation of <a href="../../jetleaf_retry/RetryPolicy-class.html">RetryPolicy</a> that limits the number
+of retry attempts and determines retry eligibility based on exception type.</p>
+<p>The <a href="../../jetleaf_retry/SimpleRetryPolicy-class.html">SimpleRetryPolicy</a> is the default retry strategy used in many
+JetLeaf retry mechanisms. It defines a maximum number of attempts and
+class-based inclusion/exclusion rules for retryable exceptions.</p>
+<h3 id="core-behavior">Core Behavior</h3>
+<ul>
+<li>Retries are <strong>bounded</strong> by <code>_maxAttempts</code>.</li>
+<li>Exceptions listed in <code>_nonRetryableExceptions</code> <strong>will never</strong> trigger a retry.</li>
+<li>If <code>_retryableExceptions</code> is <strong>non-empty</strong>, only those exceptions will be retried.</li>
+<li>If both sets are empty, <strong>all exceptions</strong> are considered retryable.</li>
+</ul>
+<h3 id="example">Example</h3>
+<pre class="language-dart"><code class="language-dart">final policy = SimpleRetryPolicy();
+
+final context = DefaultRetryContext('networkCall');
+
+final canRetry = policy.shouldRetryForException(
+  TimeoutException('connection lost'),
+  context,
+);
+
+print(canRetry); // true (retryable)
+</code></pre>
+<h3 id="configuration-notes">Configuration Notes</h3>
+<ul>
+<li>The first execution counts as <strong>attempt #1</strong>.<br>
+Retrying up to <code>maxAttempts</code> means at most <code>maxAttempts - 1</code> retries.</li>
+<li>The policy uses reflective <code>Class</code> matching for exception assignability.
+For example, a subclass of a retryable type will also qualify.</li>
+</ul>
+<h3 id="typical-use-cases">Typical Use Cases</h3>
+<ul>
+<li>Retrying transient network errors such as <code>TimeoutException</code>.</li>
+<li>Avoiding retries for user or configuration errors (e.g. <code>FormatException</code>).</li>
+<li>Providing a baseline policy for higher-level abstractions like <code>RetryTemplate</code>.</li>
+</ul>
+<h3 id="thread-safety">Thread Safety</h3>
+<p>This class is <strong>immutable</strong> and <strong>thread-safe</strong>.</p>
+<h3 id="see-also">See Also</h3>
+<ul>
+<li><a href="../../jetleaf_retry/RetryPolicy-class.html">RetryPolicy</a> — The interface that defines retry decision logic.</li>
+<li><a href="../../jetleaf_retry/RetryContext-class.html">RetryContext</a> — Provides state about current retry attempts.</li>
+<li><a href="../../jetleaf_retry/Retryable-class.html">Retryable</a> — Annotation for declarative retry configuration.</li>
+<li><a href="../../jetleaf_retry/ExponentialBackoffPolicy-class.html">ExponentialBackoffPolicy</a> — A complementary policy for retry delay control.</li>
+</ul>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">SimpleRetryPolicy();</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/">jetleaf_retry</a></li>
+    <li><a href="../../jetleaf_retry/SimpleRetryPolicy-class.html">SimpleRetryPolicy</a></li>
+    <li class="self-crumb">SimpleRetryPolicy.new constructor</li>
+</ol>
+
+    <h5>SimpleRetryPolicy class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    jetleaf_retry
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

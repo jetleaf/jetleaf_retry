@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="jetleaf_retry API docs, for the Dart programming language.">
+  <title>jetleaf_retry - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://jetleaf.hapnium.com">jetleaf_retry package</a></li>
+  </ol>
+  <div class="self-name">jetleaf_retry</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="jetleaf-resilience-">JetLeaf Resilience 🍃</h1>
+<p>Fault tolerance and resilience patterns for JetLeaf applications.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>🔄 <strong>Declarative Retry Logic</strong> — Use <code>@Retryable</code> annotations for transparent retry behavior</li>
+<li>⏱️ <strong>Flexible Backoff Strategies</strong> — Exponential, fixed, and random backoff policies</li>
+<li>🛡️ <strong>Recovery Mechanisms</strong> — Graceful degradation with <code>@Recover</code> callbacks</li>
+<li>📊 <strong>Observability</strong> — Built-in retry listeners and statistics</li>
+<li>🎯 <strong>AOP Integration</strong> — Seamless method interception via JetLeaf's IoC container</li>
+<li>⚙️ <strong>Environment-Aware</strong> — Configure retry behavior via application properties</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Add to your <code>pubspec.yaml</code>:</p>
+<pre class="language-yaml"><code class="language-yaml">dependencies:
+  jetleaf_resilience:
+    path: ../jetleaf_resilience
+</code></pre>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="basic-retry">Basic Retry</h3>
+<pre class="language-dart"><code class="language-dart">import 'package:jetleaf_resilience/jetleaf_resilience.dart';
+
+class ApiService {
+  @Retryable(maxAttempts: 3)
+  Future&lt;Response&gt; fetchData() async {
+    return await httpClient.get('/api/data');
+  }
+}
+</code></pre>
+<h3 id="retry-with-backoff">Retry with Backoff</h3>
+<pre class="language-dart"><code class="language-dart">@Retryable(
+  maxAttempts: 5,
+  backoff: Backoff(
+    delay: 1000,       // 1 second initial delay
+    multiplier: 2.0,   // Double delay each retry
+    maxDelay: 30000,   // Cap at 30 seconds
+    random: true,      // Add random jitter
+  ),
+)
+Future&lt;User&gt; fetchUser(String id) async {
+  return await apiClient.getUser(id);
+}
+</code></pre>
+<h3 id="retry-specific-exceptions">Retry Specific Exceptions</h3>
+<pre class="language-dart"><code class="language-dart">@Retryable(
+  maxAttempts: 3,
+  retryFor: [IOException, TimeoutException],
+  noRetryFor: [AuthenticationException],
+)
+Future&lt;Data&gt; fetchSecureData() async {
+  // Retries on IOException or TimeoutException
+  // Does NOT retry on AuthenticationException
+  return await secureApi.getData();
+}
+</code></pre>
+<h3 id="recovery-callback">Recovery Callback</h3>
+<pre class="language-dart"><code class="language-dart">class DataService {
+  @Retryable(maxAttempts: 3, label: 'fetchUserData')
+  Future&lt;UserData&gt; fetchUserData(String userId) async {
+    return await apiClient.getUserData(userId);
+  }
+
+  @Recover(label: 'fetchUserData')
+  Future&lt;UserData&gt; fetchUserDataRecovery(Exception e, String userId) async {
+    // Fallback: return cached data
+    return await cache.getUserData(userId) ?? UserData.empty();
+  }
+}
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<h3 id="via-annotations">Via Annotations</h3>
+<pre class="language-dart"><code class="language-dart">@Retryable(
+  maxAttempts: 5,
+  backoff: Backoff(
+    delay: 1000,
+    multiplier: 2.0,
+    maxDelay: 30000,
+    random: true,
+  ),
+  retryFor: [IOException],
+  label: 'fetchCriticalData',
+)
+</code></pre>
+<h3 id="via-environment-properties">Via Environment Properties</h3>
+<pre class="language-dart"><code class="language-dart">@ConfigurationProperties(prefix: 'app.retry')
+class RetryConfiguration implements EnvironmentAware {
+  late Environment _environment;
+  
+  int get maxAttempts =&gt; _environment.getProperty('max-attempts', int, defaultValue: 3);
+  int get delay =&gt; _environment.getProperty('delay', int, defaultValue: 1000);
+  
+  @override
+  void setEnvironment(Environment environment) {
+    _environment = environment;
+  }
+}
+</code></pre>
+<h2 id="retry-listeners">Retry Listeners</h2>
+<p>Monitor retry operations for observability:</p>
+<pre class="language-dart"><code class="language-dart">@RetryListenerAnnotation()
+class MetricsRetryListener implements RetryListener {
+  @override
+  void onOpen(RetryContext context) {
+    print('🔄 Retry operation started: ${context.getName()}');
+  }
+
+  @override
+  void onRetry(RetryContext context) {
+    print('⚠️ Retry attempt ${context.getAttemptCount()}');
+  }
+
+  @override
+  void onError(RetryContext context, Exception exception) {
+    print('❌ Error: $exception');
+  }
+
+  @override
+  void onClose(RetryContext context, Exception? lastException) {
+    print('✅ Operation completed after ${context.getAttemptCount()} attempts');
+  }
+}
+</code></pre>
+<h2 id="manual-retry-execution">Manual Retry Execution</h2>
+<p>For programmatic control:</p>
+<pre class="language-dart"><code class="language-dart">final executor = RetryExecutor(
+  retryPolicy: SimpleRetryPolicy(maxAttempts: 3),
+  backoffPolicy: ExponentialBackoffPolicy(initialDelay: 1000),
+  listeners: [LoggingRetryListener()],
+);
+
+final result = await executor.execute(
+  callback: () async =&gt; await apiClient.fetchData(),
+  recovery: () async =&gt; cachedData,
+);
+</code></pre>
+<h2 id="statistics">Statistics</h2>
+<p>Track retry operations:</p>
+<pre class="language-dart"><code class="language-dart">final factory = context.getPod&lt;ResilienceFactory&gt;();
+final stats = factory.statistics;
+
+print('Started: ${stats.getStartedCount()}');
+print('Success: ${stats.getSuccessCount()}');
+print('Exhausted: ${stats.getExhaustedCount()}');
+print('Recovered: ${stats.getRecoveryCount()}');
+</code></pre>
+<h2 id="architecture">Architecture</h2>
+<pre class="language-dart"><code>@Retryable method call
+       ↓
+Proxy created by JetLeaf AOP
+       ↓
+ResilienceFactory (intercepts method)
+       ↓
+RetryExecutor.execute(RetryCallback, RecoveryCallback)
+       ↓
+Policy and backoff control loop
+       ↓
+Method succeeds → return result
+       ↓ OR
+Retries exhausted → call @Recover method
+</code></pre>
+<h2 id="license">License</h2>
+<p>Part of the JetLeaf framework.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <h3>JetLeaf Retry</h3>
+            <dt id="jetleaf_retry">
+  <span class="name"><a href="jetleaf_retry/">jetleaf_retry</a></span> 
+
+</dt>
+<dd>JetLeaf Retry Library 🍃
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="https://jetleaf.hapnium.com">jetleaf_retry package</a></li>
+</ol>
+
+    <h5 class="hidden-xs"><span class="package-name">jetleaf_retry</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li class="section-subtitle">JetLeaf Retry</li>
+        <li class="section-subitem"><a href="jetleaf_retry/">jetleaf_retry</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+</main>
+<footer>
+  <span class="no-break">
+    jetleaf_retry
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

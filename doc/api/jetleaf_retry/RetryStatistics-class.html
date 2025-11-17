@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the RetryStatistics class from the jetleaf_retry library, for the Dart programming language.">
+  <title>RetryStatistics class - jetleaf_retry library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">jetleaf_retry</a></li>
+    <li><a href="../jetleaf_retry/">jetleaf_retry.dart</a></li>
+    <li class="self-crumb">RetryStatistics class</li>
+  </ol>
+  <div class="self-name">RetryStatistics</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="jetleaf_retry&#47;jetleaf_retry-library-sidebar.html"
+    data-below-sidebar="jetleaf_retry&#47;RetryStatistics-class-sidebar.html">
+    <div>
+<h1><span class="kind-class">RetryStatistics</span> class 
+    <a href="https://dart.dev/language/class-modifiers#abstract" class="feature feature-abstract" title="This type can not be directly constructed.">abstract</a>
+    <a href="https://dart.dev/language/class-modifiers#interface" class="feature feature-interface" title="This class can only be implemented (not extended or mixed in).">interface</a>
+ 
+</h1></div>
+
+    
+<section class="desc markdown">
+  <p>Provides statistical metrics and counters for retry operations.</p>
+<p>A <a href="../jetleaf_retry/RetryStatistics-class.html">RetryStatistics</a> implementation maintains aggregated metrics that track
+the lifecycle outcomes of retryable operations — including how many retries
+have started, succeeded, failed, or required recovery.</p>
+<p>These statistics are primarily used for <strong>monitoring, diagnostics, and
+performance tuning</strong> of retry strategies within the JetLeaf framework.
+Implementations may expose live metrics to dashboards, logs, or telemetry
+systems.</p>
+<h3 id="typical-use-cases">Typical Use Cases</h3>
+<ul>
+<li>Exposing retry metrics to observability platforms (e.g. Prometheus).</li>
+<li>Logging retry performance trends over time.</li>
+<li>Resetting counters between test runs or operational cycles.</li>
+<li>Feeding adaptive retry policies that adjust behavior based on history.</li>
+</ul>
+<h3 id="example">Example</h3>
+<pre class="language-dart"><code class="language-dart">class SimpleRetryStatistics implements RetryStatistics {
+  int _started = 0;
+  int _success = 0;
+  int _exhausted = 0;
+  int _recovered = 0;
+
+  @override
+  int getStartedCount() =&gt; _started;
+
+  @override
+  int getSuccessCount() =&gt; _success;
+
+  @override
+  int getExhaustedCount() =&gt; _exhausted;
+
+  @override
+  int getRecoveryCount() =&gt; _recovered;
+
+  void recordStart() =&gt; _started++;
+  void recordSuccess() =&gt; _success++;
+  void recordExhausted() =&gt; _exhausted++;
+  void recordRecovery() =&gt; _recovered++;
+
+  @override
+  void reset() {
+    _started = _success = _exhausted = _recovered = 0;
+  }
+}
+</code></pre>
+<h3 id="integration-points">Integration Points</h3>
+<ul>
+<li>Used internally by the JetLeaf retry infrastructure (e.g. <code>RetryExecutor</code>)
+to expose runtime metrics.</li>
+<li>Can be extended by monitoring adapters or custom retry executors.</li>
+<li>May be integrated with external metrics collectors such as Micrometer
+or OpenTelemetry.</li>
+</ul>
+<h3 id="metrics-summary">Metrics Summary</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Started</strong></td>
+<td><a href="../jetleaf_retry/RetryStatistics/getStartedCount.html">getStartedCount</a></td>
+<td>Total number of retry operations initiated.</td>
+</tr>
+<tr>
+<td><strong>Success</strong></td>
+<td><a href="../jetleaf_retry/RetryStatistics/getSuccessCount.html">getSuccessCount</a></td>
+<td>Count of operations completed successfully before exhausting retries.</td>
+</tr>
+<tr>
+<td><strong>Exhausted</strong></td>
+<td><a href="../jetleaf_retry/RetryStatistics/getExhaustedCount.html">getExhaustedCount</a></td>
+<td>Count of operations that failed even after all retry attempts.</td>
+</tr>
+<tr>
+<td><strong>Recovered</strong></td>
+<td><a href="../jetleaf_retry/RetryStatistics/getRecoveryCount.html">getRecoveryCount</a></td>
+<td>Count of recovery callbacks successfully invoked after failure.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="thread-safety">Thread Safety</h3>
+<p>Implementations <strong>should be thread-safe</strong> if used in concurrent retry
+environments.</p>
+<h3 id="see-also">See Also</h3>
+<ul>
+<li><a href="../jetleaf_retry/RetryContext-class.html">RetryContext</a> — Tracks the state of individual retry executions.</li>
+<li><a href="../jetleaf_retry/RetryPolicy-class.html">RetryPolicy</a> — Governs retry eligibility.</li>
+<li><a href="../jetleaf_retry/RetryListener-class.html">RetryListener</a> — Observes retry lifecycle events.</li>
+<li><a href="../jetleaf_retry/Retryable-class.html">Retryable</a> — Annotation that declares retryable methods.</li>
+</ul>
+</section>
+
+
+    <section>
+      <dl class="dl-horizontal">
+        
+
+        
+        
+
+          <dt>Implementers</dt>
+          <dd><ul class="comma-separated clazz-relationships">
+              <li><a href="../jetleaf_retry/InMemoryStatistics-class.html">InMemoryStatistics</a></li>
+          </ul></dd>
+
+        
+        
+
+
+      </dl>
+    </section>
+
+    
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
+        <dt id="hashCode" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.9.2/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  The hash code for this object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="runtimeType" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.9.2/dart-core/Type-class.html">Type</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  A representation of the runtime type of the object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
+        <dt id="getExhaustedCount" class="callable">
+  <span class="name"><a href="../jetleaf_retry/RetryStatistics/getExhaustedCount.html">getExhaustedCount</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.9.2/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns the total number of operations that <strong>exhausted all retry
+attempts</strong> and still failed.
+  
+
+</dd>
+
+        <dt id="getRecoveryCount" class="callable">
+  <span class="name"><a href="../jetleaf_retry/RetryStatistics/getRecoveryCount.html">getRecoveryCount</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.9.2/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns the total number of <strong>recovery callbacks</strong> that were invoked
+after retry exhaustion.
+  
+
+</dd>
+
+        <dt id="getStartedCount" class="callable">
+  <span class="name"><a href="../jetleaf_retry/RetryStatistics/getStartedCount.html">getStartedCount</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.9.2/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns the total number of retry operations that have been <strong>started</strong>.
+  
+
+</dd>
+
+        <dt id="getSuccessCount" class="callable">
+  <span class="name"><a href="../jetleaf_retry/RetryStatistics/getSuccessCount.html">getSuccessCount</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.9.2/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns the total number of operations that <strong>completed successfully</strong>
+without exhausting their retry limit.
+  
+
+</dd>
+
+        <dt id="incrementExhausted" class="callable">
+  <span class="name"><a href="../jetleaf_retry/RetryStatistics/incrementExhausted.html">incrementExhausted</a></span><span class="signature">(<wbr>[<span class="parameter" id="incrementExhausted-param-count"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">count</span></span>])
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Increments the counter of retry operations that exhausted all attempts.
+  
+
+</dd>
+
+        <dt id="incrementRecovery" class="callable">
+  <span class="name"><a href="../jetleaf_retry/RetryStatistics/incrementRecovery.html">incrementRecovery</a></span><span class="signature">(<wbr>[<span class="parameter" id="incrementRecovery-param-count"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">count</span></span>])
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Increments the counter of recovery callbacks invoked.
+  
+
+</dd>
+
+        <dt id="incrementStarted" class="callable">
+  <span class="name"><a href="../jetleaf_retry/RetryStatistics/incrementStarted.html">incrementStarted</a></span><span class="signature">(<wbr>[<span class="parameter" id="incrementStarted-param-count"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">count</span></span>])
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Increments the counter of retry operations that have started.
+  
+
+</dd>
+
+        <dt id="incrementSuccess" class="callable">
+  <span class="name"><a href="../jetleaf_retry/RetryStatistics/incrementSuccess.html">incrementSuccess</a></span><span class="signature">(<wbr>[<span class="parameter" id="incrementSuccess-param-count"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">count</span></span>])
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Increments the counter of retry operations that succeeded.
+  
+
+</dd>
+
+        <dt id="noSuchMethod" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Invoked when a nonexistent method or property is accessed.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="reset" class="callable">
+  <span class="name"><a href="../jetleaf_retry/RetryStatistics/reset.html">reset</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Resets all recorded statistics to zero.
+  
+
+</dd>
+
+        <dt id="toString" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.9.2/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  A string representation of this object.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.2/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.9.2/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  The equality operator.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+    
+    
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">jetleaf_retry</a></li>
+    <li><a href="../jetleaf_retry/">jetleaf_retry</a></li>
+    <li class="self-crumb">RetryStatistics class</li>
+</ol>
+
+    <h5>jetleaf_retry library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    jetleaf_retry
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
