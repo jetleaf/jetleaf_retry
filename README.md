@@ -17,8 +17,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  jetleaf_resilience:
-    path: ../jetleaf_resilience
+  jetleaf_retry: ^1.0.0
 ```
 
 ## Quick Start

@@ -12,53 +12,85 @@
 // 
 // 🔧 Powered by Hapnium — the Dart backend engine 🍃
 
-/// JetLeaf Retry Library 🍃
+/// 🔄 **JetLeaf Retry Library**
 ///
-/// Provides fault tolerance and resilience patterns for JetLeaf applications,
-/// enabling declarative retry logic, circuit breakers, and recovery mechanisms
-/// through annotations and AOP-style interception.
+/// This library provides a comprehensive retry mechanism for JetLeaf
+/// applications, allowing developers to automatically retry failed
+/// operations, handle recoveries, and track retry metrics.
 ///
-/// ### Key Features
-/// - Declarative retry logic using `@Retryable` annotations.
-/// - Flexible backoff strategies (exponential, fixed, random).
-/// - Recovery callbacks via `@Recover` annotation.
-/// - Retry listeners for monitoring and observability.
-/// - Integration with JetLeaf's dependency injection and environment configuration.
-/// - AOP-style method interception for transparent retry behavior.
+/// It supports annotations, configurable retry policies, backoff strategies,
+/// event publishing, and extensible retry factories.
 ///
-/// ### Exports
-/// - `annotations.dart` — Core resilience annotations (@Retryable, @Recover, @Backoff).
-/// - `base.dart` — Foundational interfaces and contracts.
-/// - `base_impl.dart` — Default implementations of policies and strategies.
-/// - `retry_executor.dart` — Core retry execution engine.
-/// - `resilience_factory.dart` — Main factory with interceptor logic.
-/// - `resilience_auto_configuration.dart` — Auto-configuration for DI.
-/// - `exceptions.dart` — Retry-related exception types.
 ///
-/// ### Example
+/// ## 🔑 Key Concepts
+///
+/// ### 📝 Annotations
+/// - `@Retryable` — declarative method-level retry configuration  
+/// - `@Recover` — defines fallback behavior when retries are exhausted
+///
+///
+/// ### ⚙ Core Retry Infrastructure
+/// - `RetryFactory` — main factory for creating retry-enabled operations  
+/// - `AbstractRetryFactory` — base type for factory implementations  
+/// - `AnnotationAwareRetryFactory` — supports annotation-driven retries  
+/// - `ExecutableRetryFactory` — runtime execution factory  
+/// - `RetryDefinition` — metadata describing retry rules
+///
+///
+/// ### 🔄 Retry Execution
+/// - `RetryExecutor` — orchestrates retry attempts  
+/// - `RetryPolicy` — interface for controlling retry logic  
+/// - `RetryContext` — maintains state for an operation attempt  
+/// - `RetryListener` — hooks for observing retry events  
+/// - `RecoveryCallback` — invoked after retries fail  
+/// - `RetryCallback` — user-provided retryable operation
+///
+///
+/// ### ⏱ Backoff Policies
+/// - `BackoffPolicy` — interface for waiting strategies  
+/// - `FixedBackoffPolicy` — fixed interval between retries  
+/// - `ExponentialBackoffPolicy` — exponential growth intervals
+///
+///
+/// ### 📊 Retry Metrics
+/// - `RetryStatistics` — interface for tracking attempts and results  
+/// - `InMemoryStatistics` — simple in-memory implementation
+///
+///
+/// ### 📦 Events
+/// - `RetryEvent` — emitted on retry attempts for observability
+///
+///
+/// ### 🛠 Implementations
+/// - `DefaultRetryExecutor` — default executor implementation  
+/// - `SimpleRetryPolicy` — basic retry policy  
+/// - `SimpleRetryContext` — default retry context holder
+///
+///
+/// ### ⚙ Auto-Configuration
+/// - `RetryAutoConfiguration` — provides default beans and setups for JetLeaf applications
+///
+///
+/// ### ⚠ Exceptions
+/// - Framework-level errors for invalid retry definitions or execution failures
+///
+///
+/// ## 🎯 Intended Usage
+///
+/// Import this library to enable retries with minimal configuration:
 /// ```dart
-/// import 'package:jetleaf_resilience/jetleaf_resilience.dart';
+/// import 'package:jetleaf_retry/jetleaf_retry.dart';
 ///
-/// class ApiService {
-///   @Retryable(
-///     maxAttempts: 3,
-///     backoff: Backoff(delay: 1000, multiplier: 2.0),
-///     retryFor: [IOException],
-///   )
-///   Future<Response> fetchData() async {
-///     // This method will be retried up to 3 times on IOException
-///     return await http.get('https://api.example.com/data');
-///   }
-///
-///   @Recover()
-///   Future<Response> fetchDataRecovery(IOException e) async {
-///     // Fallback logic when retries are exhausted
-///     return Response.cached();
-///   }
+/// @Retryable(maxAttempts: 3, backoff: FixedBackoffPolicy(1000))
+/// void fetchData() {
+///   // code that might fail
 /// }
 /// ```
 ///
-/// {@category JetLeaf Retry}
+/// Supports annotation-driven retries, custom policies, and fallback recoveries.
+///
+///
+/// © 2025 Hapnium & JetLeaf Contributors
 library;
 
 export 'src/annotations/recover.dart';
