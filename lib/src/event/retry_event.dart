@@ -51,7 +51,7 @@ abstract class RetryEvent<T> extends ApplicationEvent {
   /// Constructs a retry event for a given [source] method invocation.
   /// 
   /// {@macro jetleaf_retry_event}
-  RetryEvent(MethodInvocation<T> super.source);
+  const RetryEvent(MethodInvocation<T> super.source, super.timestamp);
 
   /// Constructs a retry event with an explicit [timestamp].
   /// 
@@ -84,6 +84,11 @@ abstract class RetryEvent<T> extends ApplicationEvent {
 /// {@endtemplate}
 @Generic(InvocationRetryEvent)
 final class InvocationRetryEvent<T> extends RetryEvent<T> {
+  /// Constructs an invocation retry event with a [source] and [timestamp].
+  /// 
+  /// {@macro jetleaf_invocation_retry_event}
+  const InvocationRetryEvent(super.source, super.timestamp);
+
   /// Constructs an invocation retry event with a [source] and [timestamp].
   /// 
   /// {@macro jetleaf_invocation_retry_event}
