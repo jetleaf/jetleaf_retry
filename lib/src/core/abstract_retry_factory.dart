@@ -266,7 +266,7 @@ abstract class AbstractRetryFactory implements RetryFactory {
       final params = m.getParameters();
       if (params.isEmpty) continue;
 
-      final firstParam = params.first.getClass();
+      final firstParam = params.first.getReturnClass();
       if (!ClassUtils.isAssignableToError(firstParam)) continue;
 
       if (logger.getIsTraceEnabled()) {

@@ -409,7 +409,7 @@ class _MethodInvocationRecoveryCallback<T> implements RecoveryCallback<T> {
   final Method _method;
 
   /// The original method arguments from the failed invocation, if available.
-  final MethodArgument? _originalArguments;
+  final ExecutableArgument? _originalArguments;
 
   /// Creates a new recovery callback that binds a target, recovery method,
   /// and original invocation arguments.
